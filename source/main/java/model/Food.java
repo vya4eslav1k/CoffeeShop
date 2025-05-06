@@ -30,6 +30,11 @@ public class Food implements MenuItem{
         return price;
     }
 
+    @Override
+    public String toString() {
+        return "Food: " + name + ", Price: " + price;
+    }
+
     public Optional<Double> getCalories() {
         return calories;
     }

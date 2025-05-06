@@ -30,6 +30,11 @@ public class Drink implements MenuItem {
         return price;
     }
 
+    @Override
+    public String toString() {
+        return "Drink: " + name + ", Price: " + price;
+    }
+
     public Optional<Double> getVolume() {
         return volume;
     }

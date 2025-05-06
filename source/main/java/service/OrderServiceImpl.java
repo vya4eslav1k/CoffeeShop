@@ -3,11 +3,13 @@ package service;
 import model.MenuItem;
 import model.Order;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderServiceImpl implements OrderService {
 
     private final Order order;
+    private double discount;
     private final List<MenuItem> catalog;
 
     public OrderServiceImpl(Order order, List<MenuItem> catalog) {
@@ -17,23 +19,30 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void addMenuItem(String menuItemName) {
-        //TODO
+        for (MenuItem menuItem : catalog) {
+            if (menuItem.getName().equalsIgnoreCase(menuItemName.toUpperCase())) {
+                order.addItem(menuItem);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Item " + menuItemName + " not found in catalog");
     }
 
     @Override
     public double getTotalPrice() {
-        //TODO
-        return 0;
+        return order.getTotalPrice() * (1 - discount*0.01);
     }
 
     @Override
     public void applyDiscount(double discount) {
-        //TODO
+        if (discount < 0 || discount > 100) {
+            throw new IllegalArgumentException("Discount must be between 0 and 100");
+        }
+        this.discount = discount;
     }
 
     @Override
     public List<MenuItem> getMenuItems() {
-        //TODO
-        return List.of();
+        return new ArrayList<>(order.getItems());
     }
 }
